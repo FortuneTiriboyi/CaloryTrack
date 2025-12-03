@@ -24,7 +24,7 @@ function App() {
       setWeeklyData(weekly);
       setMonthlyData(monthly);
       setLifetimeData(lifetime);
-      
+
       // Check for weekly reset
       checkWeeklyReset(weekly.lastReset);
     } catch (err) {
@@ -79,9 +79,9 @@ function App() {
   const renderLeaderStatus = () => {
     if (!leaderInfo.name) return null;
     return (
-      <div className="leader-status">
+      <div className="text-center text-text-muted text-sm mb-2.5 italic">
         👑 <strong>{leaderInfo.name}</strong> has been leading for{' '}
-        <strong style={{ color: 'var(--accent)' }}>{leaderInfo.duration}</strong>
+        <strong className="text-accent">{leaderInfo.duration}</strong>
       </div>
     );
   };
@@ -90,20 +90,20 @@ function App() {
     <>
       <Header theme={theme} onToggleTheme={toggleTheme} />
 
-      <main>
+      <main className="max-w-4xl mx-auto p-5">
         <EntryForm ref={entryFormRef} onSubmitSuccess={loadAllData} />
 
         <section>
-          <h2 className="section-title">
+          <h2 className="mb-4 text-accent flex justify-between items-center text-xl font-bold">
             Leaderboards
-            <button className="reset-btn" onClick={handleReset}>
+            <button className="w-auto text-xs px-2.5 py-1 bg-input-bg border border-input-border text-text rounded" onClick={handleReset}>
               Reset Demo
             </button>
           </h2>
 
           <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-          <div className={`tab-content ${activeTab === 'weekly' ? 'active' : ''}`}>
+          <div className={`${activeTab === 'weekly' ? 'block' : 'hidden'}`}>
             <Leaderboard
               users={weeklyData.users}
               emptyMessage="No entries yet. Be the first! 🏋️"
@@ -114,26 +114,26 @@ function App() {
             />
           </div>
 
-          <div className={`tab-content ${activeTab === 'monthly' ? 'active' : ''}`}>
+          <div className={`${activeTab === 'monthly' ? 'block' : 'hidden'}`}>
             <Leaderboard
               users={monthlyData.users}
               emptyMessage="No entries this month yet. 📅"
               onShowImage={setModalImage}
               showHistory={false}
               headerContent={
-                <p className="month-label">{monthlyData.month}</p>
+                <p className="text-center text-text-muted text-sm mb-2.5 italic">{monthlyData.month}</p>
               }
             />
           </div>
 
-          <div className={`tab-content ${activeTab === 'lifetime' ? 'active' : ''}`}>
+          <div className={`${activeTab === 'lifetime' ? 'block' : 'hidden'}`}>
             <Leaderboard
               users={lifetimeData.users}
               emptyMessage="No lifetime data yet. 🏆"
               onShowImage={setModalImage}
               showHistory={false}
               headerContent={
-                <p className="month-label">All-time champions 🌟</p>
+                <p className="text-center text-text-muted text-sm mb-2.5 italic">All-time champions 🌟</p>
               }
             />
           </div>

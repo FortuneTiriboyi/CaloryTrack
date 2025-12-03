@@ -58,11 +58,11 @@ export const EntryForm = forwardRef(function EntryForm({ onSubmitSuccess }, ref)
   };
 
   return (
-    <section className="card" ref={formRef}>
-      <h2 className="form-title">Add Daily Burn</h2>
+    <section className="bg-card-bg rounded-2xl p-5 mb-5 shadow-md border border-input-border" ref={formRef}>
+      <h2 className="mb-4 text-secondary text-2xl font-bold">Add Daily Burn</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Name / Nickname</label>
+        <div className="mb-4">
+          <label htmlFor="username" className="block mb-1 text-accent font-bold">Name / Nickname</label>
           <input
             type="text"
             id="username"
@@ -71,10 +71,11 @@ export const EntryForm = forwardRef(function EntryForm({ onSubmitSuccess }, ref)
             maxLength={20}
             value={name}
             onChange={(e) => setName(e.target.value)}
+            className="w-full p-2.5 rounded-lg border border-input-border bg-input-bg text-text text-base focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="calories">Calories Burned</label>
+        <div className="mb-4">
+          <label htmlFor="calories" className="block mb-1 text-accent font-bold">Calories Burned</label>
           <input
             type="number"
             id="calories"
@@ -84,19 +85,25 @@ export const EntryForm = forwardRef(function EntryForm({ onSubmitSuccess }, ref)
             max={10000}
             value={calories}
             onChange={(e) => setCalories(e.target.value)}
+            className="w-full p-2.5 rounded-lg border border-input-border bg-input-bg text-text text-base focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="proof">Proof (Optional Screenshot)</label>
+        <div className="mb-4">
+          <label htmlFor="proof" className="block mb-1 text-accent font-bold">Proof (Optional Screenshot)</label>
           <input
             type="file"
             id="proof"
             accept="image/png, image/jpeg"
             ref={fileInputRef}
+            className="w-full p-2.5 rounded-lg border border-input-border bg-input-bg text-text text-base focus:outline-none focus:ring-2 focus:ring-primary"
           />
-          <p className="privacy-note">Only visible to participants. Max 5MB.</p>
+          <p className="text-gray-400 text-xs mt-1">Only visible to participants. Max 5MB.</p>
         </div>
-        <button type="submit" disabled={isSubmitting}>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-gradient-to-r from-primary to-secondary text-white border-none py-3 px-6 rounded-full text-lg cursor-pointer w-full font-bold transition-transform hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
+        >
           {isSubmitting ? 'Submitting...' : '💪 Log It!'}
         </button>
       </form>
