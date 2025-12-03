@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Header, EntryForm, Leaderboard, Tabs, ImageModal } from './components';
+import { Header, EntryForm, Leaderboard, Tabs, ImageModal, CalorieChecker } from './components';
 import { useLeaderDuration } from './hooks';
 import { fetchWeeklyData, fetchMonthlyData, fetchLifetimeData, resetData } from './api';
 import { motion } from 'framer-motion';
-import { Crown, RotateCcw } from 'lucide-react';
+import { Crown, RotateCcw, Utensils } from 'lucide-react';
 
 function App() {
   const [activeTab, setActiveTab] = useState('weekly');
@@ -11,6 +11,7 @@ function App() {
   const [monthlyData, setMonthlyData] = useState({ users: [], month: '' });
   const [lifetimeData, setLifetimeData] = useState({ users: [] });
   const [modalImage, setModalImage] = useState(null);
+  const [isFoodModalOpen, setIsFoodModalOpen] = useState(false);
   const entryFormRef = useRef(null);
 
   const leaderInfo = useLeaderDuration(weeklyData.users);
@@ -77,6 +78,12 @@ function App() {
     entryFormRef.current?.scrollIntoView();
   };
 
+  const handleApplyCalculatorTotal = (totalCalories) => {
+    entryFormRef.current?.setFormValues('', totalCalories);
+    entryFormRef.current?.scrollIntoView();
+    setIsFoodModalOpen(false);
+  };
+
   const renderLeaderStatus = () => {
     if (!leaderInfo.name) return null;
     return (
@@ -99,6 +106,18 @@ function App() {
       <Header />
 
       <main className="max-w-3xl mx-auto px-5 pb-20">
+        <div className="flex justify-end mb-4">
+          <motion.button
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            onClick={() => setIsFoodModalOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-accent-secondary/10 text-accent-secondary border border-accent-secondary/20 hover:bg-accent-secondary/20 transition-all text-sm font-medium"
+          >
+            <Utensils className="w-4 h-4" />
+            Check Food Calories
+          </motion.button>
+        </div>
+
         <EntryForm ref={entryFormRef} onSubmitSuccess={loadAllData} />
 
         <section className="relative">
@@ -155,6 +174,11 @@ function App() {
       </main>
 
       <ImageModal imageSrc={modalImage} onClose={() => setModalImage(null)} />
+      <CalorieChecker
+        isOpen={isFoodModalOpen}
+        onClose={() => setIsFoodModalOpen(false)}
+        onApply={handleApplyCalculatorTotal}
+      />
     </>
   );
 }
