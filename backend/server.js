@@ -14,12 +14,10 @@ const DB_PATH = path.join(__dirname, 'leaderboard.db');
 app.use(cors());
 app.use(bodyParser.json({ limit: '10mb' })); // Increased limit for base64 images
 
-// Serve React build in production, fallback to old index.html
-const clientBuildPath = path.join(__dirname, 'client', 'dist');
+// Serve React build in production
+const clientBuildPath = path.join(__dirname, '..', 'client', 'dist');
 if (fs.existsSync(clientBuildPath)) {
     app.use(express.static(clientBuildPath));
-} else {
-    app.use(express.static(__dirname)); // Serve static files (index.html)
 }
 
 // Ensure database directory has proper permissions
