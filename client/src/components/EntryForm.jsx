@@ -1,6 +1,6 @@
 import { useState, useRef, forwardRef, useImperativeHandle } from 'react';
 import { submitEntry } from '../api';
-import { resizeImage } from '../utils';
+import { resizeImage, triggerConfetti } from '../utils';
 import { motion } from 'framer-motion';
 import { Plus, Image as ImageIcon, Loader2 } from 'lucide-react';
 
@@ -48,6 +48,7 @@ export const EntryForm = forwardRef(function EntryForm({ onSubmitSuccess }, ref)
           fileInputRef.current.value = '';
         }
         onSubmitSuccess?.();
+        triggerConfetti();
       } else {
         alert('Error saving entry');
       }
